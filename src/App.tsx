@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavTab } from './types';
 import { Navbar } from './components/Navbar';
 import { AboutSection } from './components/AboutSection';
@@ -7,14 +7,29 @@ import { GallerySection } from './components/GallerySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { JoinClassModal } from './components/JoinClassModal';
-import { GitHubExportGuideModal } from './components/GitHubExportGuideModal';
+import { FacebookFollowModal } from './components/FacebookFollowModal';
 import { MessageCircle, Phone, ArrowUp } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('about');
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const [selectedCourseForEnroll, setSelectedCourseForEnroll] = useState<string>('');
-  const [isGitHubGuideOpen, setIsGitHubGuideOpen] = useState(false);
+  const [isFbModalOpen, setIsFbModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Show popup to encourage visitors to follow the Facebook page
+    try {
+      const dismissed = sessionStorage.getItem('efk_fb_modal_dismissed');
+      if (!dismissed) {
+        const timer = setTimeout(() => {
+          setIsFbModalOpen(true);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      setIsFbModalOpen(true);
+    }
+  }, []);
 
   const handleOpenJoinModal = (courseName: string = '') => {
     setSelectedCourseForEnroll(courseName);
@@ -28,7 +43,6 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onOpenJoinModal={() => handleOpenJoinModal()}
-        onOpenGitHubGuide={() => setIsGitHubGuideOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -72,7 +86,6 @@ export default function App() {
       {/* Footer */}
       <Footer
         setActiveTab={setActiveTab}
-        onOpenGitHubGuide={() => setIsGitHubGuideOpen(true)}
         onOpenJoinModal={() => handleOpenJoinModal()}
       />
 
@@ -83,9 +96,9 @@ export default function App() {
         initialCourseName={selectedCourseForEnroll}
       />
 
-      <GitHubExportGuideModal
-        isOpen={isGitHubGuideOpen}
-        onClose={() => setIsGitHubGuideOpen(false)}
+      <FacebookFollowModal
+        isOpen={isFbModalOpen}
+        onClose={() => setIsFbModalOpen(false)}
       />
     </div>
   );

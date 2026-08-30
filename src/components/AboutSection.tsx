@@ -1,8 +1,10 @@
-import React from 'react';
-import { Sparkles, Star, Rocket, Laptop, Heart, Users, Video, Award, Phone, Send, CheckCircle2, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Sparkles, Star, Rocket, Laptop, Heart, Users, Video, Award, Phone, Send, CheckCircle2, MessageCircle, GraduationCap, Linkedin, Github, Globe, ExternalLink, BookOpen, Camera } from 'lucide-react';
 import { Interactive3DCanvas } from './Interactive3DCanvas';
 import heroImg from '../assets/images/hero_kids_learning_1788130643393.jpg';
 import classroomImg from '../assets/images/modern_learning_space_1788130660467.jpg';
+import teacherPortraitImg from '../assets/images/teacher_made1_portrait_1788134033965.jpg';
+import teacherLabImg from '../assets/images/teacher_ict_lab_session_1788134051659.jpg';
 
 interface AboutSectionProps {
   onOpenJoinModal: () => void;
@@ -13,6 +15,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   onOpenJoinModal,
   onNavigateCourses,
 }) => {
+  const [activeTeacherPhoto, setActiveTeacherPhoto] = useState<'portrait' | 'lab'>('portrait');
   return (
     <div id="about-section-container" className="space-y-16 pb-12">
       {/* Hero Presentation */}
@@ -226,6 +229,310 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             <p className="text-xs text-gray-500 mt-2 font-medium">
               Dedicated teaching expertise in Cambridge, Edexcel & National curriculum.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet Your Teacher / Head Educator Profile */}
+      <section id="meet-teacher-section" className="bg-gradient-to-br from-white via-[#fbfaee] to-white rounded-3xl p-6 sm:p-10 border-2 border-[#0061a4]/20 shadow-md">
+        <div className="text-center max-w-2xl mx-auto mb-8 space-y-2">
+          <span className="text-xs font-extrabold uppercase tracking-widest text-[#0061a4] bg-[#d1e4ff] px-3.5 py-1 rounded-full shadow-xs">
+            Head Educator & Founder
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0061a4] font-fredoka">
+            Meet Your Teacher: Deshani Bandara
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base font-medium">
+            Dedicated educator, software technologist, and passionate linguistics mentor guiding your child 1-on-1.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Teacher Photo Card */}
+          <div className="lg:col-span-5 flex flex-col items-center">
+            {/* Photo Mode Switcher Tabs */}
+            <div className="flex items-center gap-1.5 p-1 bg-white rounded-2xl border border-blue-200 shadow-2xs mb-3">
+              <button
+                type="button"
+                id="tab-teacher-portrait"
+                onClick={() => setActiveTeacherPhoto('portrait')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  activeTeacherPhoto === 'portrait'
+                    ? 'bg-[#0061a4] text-white shadow-xs'
+                    : 'text-gray-600 hover:text-[#0061a4] hover:bg-blue-50'
+                }`}
+              >
+                <Camera className="w-3.5 h-3.5" />
+                <span>Solo Portrait</span>
+              </button>
+              <button
+                type="button"
+                id="tab-teacher-lab"
+                onClick={() => setActiveTeacherPhoto('lab')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  activeTeacherPhoto === 'lab'
+                    ? 'bg-[#0061a4] text-white shadow-xs'
+                    : 'text-gray-600 hover:text-[#0061a4] hover:bg-blue-50'
+                }`}
+              >
+                <Laptop className="w-3.5 h-3.5" />
+                <span>ICT Lab & Tech</span>
+              </button>
+            </div>
+
+            <div className="relative group w-full max-w-xs sm:max-w-sm">
+              {/* Outer Decorative Glow Rings */}
+              <div className="absolute -inset-2 bg-gradient-to-tr from-[#0061a4] via-[#f9e534] to-[#0061a4] rounded-3xl blur-md opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              
+              <div className="relative w-full h-80 sm:h-96 rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-slate-900">
+                <img
+                  key={activeTeacherPhoto}
+                  src={activeTeacherPhoto === 'portrait' ? teacherPortraitImg : teacherLabImg}
+                  alt={
+                    activeTeacherPhoto === 'portrait'
+                      ? 'Teacher Deshani Bandara - Lead Instructor'
+                      : 'Teacher Deshani Bandara mentoring students in ICT lab'
+                  }
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                />
+                
+                {/* Active Status Badge Overlay */}
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                  <span className="bg-black/60 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-full border border-white/20">
+                    {activeTeacherPhoto === 'portrait' ? 'Lead Educator' : 'Hands-on ICT Lab'}
+                  </span>
+                  
+                  <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full shadow-md border border-emerald-200">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span className="text-[11px] font-bold text-emerald-800">
+                      {activeTeacherPhoto === 'portrait' ? 'Online Mentor' : 'Live Guidance'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Photo Switch Thumbnails */}
+            <div className="flex items-center justify-center gap-3 mt-3">
+              <button
+                type="button"
+                onClick={() => setActiveTeacherPhoto('portrait')}
+                className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shadow-2xs ${
+                  activeTeacherPhoto === 'portrait' ? 'border-[#0061a4] ring-2 ring-[#0061a4]/30 scale-105' : 'border-gray-200 opacity-70 hover:opacity-100'
+                }`}
+                title="View Solo Portrait"
+              >
+                <img
+                  src={teacherPortraitImg}
+                  alt="Portrait thumbnail"
+                  className="w-full h-full object-cover object-top"
+                />
+                <span className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[8px] font-bold text-center py-0.5">
+                  Portrait
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTeacherPhoto('lab')}
+                className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shadow-2xs ${
+                  activeTeacherPhoto === 'lab' ? 'border-[#0061a4] ring-2 ring-[#0061a4]/30 scale-105' : 'border-gray-200 opacity-70 hover:opacity-100'
+                }`}
+                title="View ICT Lab Mentoring Session"
+              >
+                <img
+                  src={teacherLabImg}
+                  alt="ICT Lab thumbnail"
+                  className="w-full h-full object-cover object-top"
+                />
+                <span className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[8px] font-bold text-center py-0.5">
+                  ICT Lab
+                </span>
+              </button>
+            </div>
+
+            <div className="mt-3 text-center">
+              <h3 className="text-xl font-extrabold text-[#0061a4] font-fredoka">
+                Deshani Bandara
+              </h3>
+              <p className="text-xs font-bold text-[#706500] uppercase tracking-wide">
+                BICT (Hons) Undergraduate · Univ. of Vavuniya
+              </p>
+            </div>
+
+            {/* Quick Profile Verification Social Icons */}
+            <div className="flex flex-wrap justify-center items-center gap-2 mt-3">
+              <a
+                id="teacher-linkedin-link"
+                href="https://www.linkedin.com/in/deshani-bandara-a0b733367/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#0077B5]/10 hover:bg-[#0077B5] text-[#0077B5] hover:text-white transition-all text-xs font-bold border border-[#0077B5]/20 shadow-2xs group"
+                title="View Deshani Bandara's Verified LinkedIn Profile"
+              >
+                <Linkedin className="w-3.5 h-3.5 fill-current" />
+                <span>LinkedIn</span>
+                <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />
+              </a>
+
+              <a
+                id="teacher-github-link"
+                href="https://github.com/DeshaniBandara"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-gray-900/10 hover:bg-gray-900 text-gray-800 hover:text-white transition-all text-xs font-bold border border-gray-300 shadow-2xs group"
+                title="View Deshani Bandara's GitHub Profile"
+              >
+                <Github className="w-3.5 h-3.5 fill-current" />
+                <span>GitHub</span>
+                <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />
+              </a>
+
+              <a
+                id="teacher-portfolio-link"
+                href="https://deshanibandara.github.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#0061a4]/10 hover:bg-[#0061a4] text-[#0061a4] hover:text-white transition-all text-xs font-bold border border-[#0061a4]/20 shadow-2xs group"
+                title="View Deshani Bandara's Personal Portfolio"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>Portfolio</span>
+                <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />
+              </a>
+            </div>
+          </div>
+
+          {/* Teacher Bio & Competencies */}
+          <div className="lg:col-span-7 space-y-5">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#f9e534]/30 text-[#706500]">
+                <GraduationCap className="w-4 h-4 text-[#706500]" />
+                <span>Academic & Professional Pedagogy</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 font-fredoka leading-tight">
+                "Combining English Linguistics with Code & Modern Technology to Shape Confident Minds."
+              </h3>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-medium">
+                Deshani Bandara is a Bachelor of Information and Communication Technology Honours (BICT Hons) undergraduate at the <strong>University of Vavuniya</strong>, specializing in software engineering systems, modern React ecosystems, and English Linguistics.
+              </p>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                With a deep passion for early phonetic development and interactive teaching methods, she conducts 100% individual, tailor-made sessions for Sri Lankan students (Grade 1 to 13), ensuring each student masters British/Cambridge phonetic pronunciation, grammar structures, exam writing, and school ICT with genuine joy.
+              </p>
+            </div>
+
+            {/* 4 Competency Highlight Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="p-3.5 rounded-2xl bg-white border border-blue-100 shadow-2xs flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-[#0061a4]/10 text-[#0061a4] flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900">University of Vavuniya</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">BICT (Hons) Undergraduate · ICT & Software Engineering</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-white border border-yellow-100 shadow-2xs flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-[#f9e534]/30 text-[#706500] flex items-center justify-center shrink-0">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900">Phonics & Linguistics</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">Early language acquisition, accents, and spoken fluency</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-white border border-emerald-100 shadow-2xs flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                  <Laptop className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900">School ICT Syllabi (Gr. 6-11)</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">Practical computer skills, logic, and O/L exam readiness</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-white border border-rose-100 shadow-2xs flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center shrink-0">
+                  <Heart className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900">100% Patient Individual Mentoring</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">No rushing, personalized notes, and friendly coaching</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Showcase Card for the Alternate Photo */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50/80 via-white to-amber-50/60 border border-blue-200/70 shadow-2xs flex flex-col sm:flex-row items-center gap-4">
+              <div className="w-full sm:w-32 h-24 rounded-xl overflow-hidden shrink-0 border border-blue-200 shadow-xs relative group/thumb">
+                <img
+                  src={activeTeacherPhoto === 'portrait' ? teacherLabImg : teacherPortraitImg}
+                  alt="Teacher Session Preview"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-top group-hover/thumb:scale-105 transition-transform"
+                />
+                <button
+                  type="button"
+                  onClick={() => setActiveTeacherPhoto(activeTeacherPhoto === 'portrait' ? 'lab' : 'portrait')}
+                  className="absolute inset-0 bg-[#0061a4]/30 hover:bg-[#0061a4]/50 transition flex items-center justify-center text-white text-[10px] font-bold"
+                >
+                  Click to View
+                </button>
+              </div>
+              <div className="space-y-1 text-left flex-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0061a4] bg-white px-2.5 py-0.5 rounded-md border border-blue-200 shadow-2xs">
+                  {activeTeacherPhoto === 'portrait' ? 'Practical ICT Lab Experience' : 'Head Educator Profile'}
+                </span>
+                <h4 className="text-sm font-bold text-gray-900 font-fredoka">
+                  {activeTeacherPhoto === 'portrait'
+                    ? 'Hands-on Software & Technology Guidance'
+                    : 'Personalized 1-on-1 English Linguistics'}
+                </h4>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  {activeTeacherPhoto === 'portrait'
+                    ? 'Teacher Deshani teaches real-world computer skills, keyboard mastery, and coding logic alongside English fluency.'
+                    : 'Dedicated 1-on-1 coaching focusing on phonetic pronunciation, grammar foundations, and speaking confidence.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons for Teacher Contact */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                id="teacher-book-class-btn"
+                onClick={onOpenJoinModal}
+                className="tactile-btn px-6 py-2.5 rounded-xl bg-[#0061a4] text-white font-fredoka text-sm font-bold flex items-center gap-2 hover:bg-[#00497d]"
+              >
+                <span>Book 1-on-1 Class with Teacher</span>
+                <Sparkles className="w-4 h-4 text-[#f9e534]" />
+              </button>
+
+              <a
+                id="teacher-direct-whatsapp-btn"
+                href="https://wa.me/94741534794?text=Hello%20Teacher%20Deshani!%20I%20would%20like%20to%20inquire%20about%20individual%20English%20or%20ICT%20classes%20for%20my%20child."
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#25D366] text-white font-bold text-xs hover:bg-[#20b858] transition shadow-xs"
+              >
+                <MessageCircle className="w-4 h-4 fill-white" />
+                <span>WhatsApp Teacher</span>
+              </a>
+
+              <a
+                id="teacher-call-btn"
+                href="tel:0741534794"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 hover:text-[#0061a4] hover:border-[#0061a4] font-bold text-xs transition shadow-xs"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>074 153 4794</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>

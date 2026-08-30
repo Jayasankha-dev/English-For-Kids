@@ -2,6 +2,27 @@ import { GalleryItem } from '../types';
 
 export const GALLERY_DATA: GalleryItem[] = [
   {
+    id: 'teacher-deshani-portrait',
+    title: 'Meet Teacher Deshani Bandara',
+    subtitle: 'Lead Instructor & Founder guiding 1-on-1 English & ICT classes with warmth and patience.',
+    category: 'teacher',
+    imageUrl: '/teacher-portrait.jpg',
+    tag: 'Teacher Profile',
+    tagColor: 'bg-[#0061a4] text-white',
+    mediaType: 'image'
+  },
+  {
+    id: 'teacher-ict-collaboration',
+    title: 'Interactive ICT & Coding Guidance',
+    subtitle: 'Mentoring young learners and peers hands-on at the workstation with modern software & logic.',
+    category: 'teacher',
+    imageUrl: '/teacher-lab.jpg',
+    tag: 'ICT & Tech Mentoring',
+    tagColor: 'bg-[#2E7D32] text-white',
+    mediaType: 'image',
+    colSpan: 'md:col-span-2'
+  },
+  {
     id: 'ocean-clownfish',
     title: 'Learning about Clownfish!',
     subtitle: 'We discovered where Nemo lives and learned new ocean vocabulary today.',

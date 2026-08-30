@@ -10,6 +10,7 @@ export const GallerySection: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'All Fun' },
+    { id: 'teacher', label: 'Teacher & Mentoring' },
     { id: 'ocean', label: 'Ocean' },
     { id: 'animals', label: 'Animals' },
     { id: 'letters', label: 'Letters & Phonics' },
@@ -85,6 +86,11 @@ export const GallerySection: React.FC = () => {
                 src={item.imageUrl}
                 alt={item.title}
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  if (item.category === 'teacher') {
+                    e.currentTarget.src = item.id === 'teacher-deshani-portrait' ? '/teacher-portrait.jpg' : '/teacher-lab.jpg';
+                  }
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
 
@@ -143,6 +149,11 @@ export const GallerySection: React.FC = () => {
                 src={selectedItem.imageUrl}
                 alt={selectedItem.title}
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  if (selectedItem.category === 'teacher') {
+                    e.currentTarget.src = selectedItem.id === 'teacher-deshani-portrait' ? '/teacher-portrait.jpg' : '/teacher-lab.jpg';
+                  }
+                }}
                 className="w-full h-full object-cover"
               />
               <button

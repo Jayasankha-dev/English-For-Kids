@@ -69,83 +69,68 @@ git push -u origin main`;
           {/* Sinhala Instruction Notice */}
           <div className="bg-[#f9e534]/20 border border-[#f9e534] rounded-2xl p-4 space-y-1.5">
             <h3 className="text-sm font-bold text-[#706500] font-fredoka flex items-center gap-1.5">
-              <span>ඔබගේ ඉල්ලීම පරිදි සකස් කරන ලද සම්පූර්ණ මගපෙන්වීම:</span>
+              <span>සුදු පාටින් Load වීම (White Screen) නිරාකරණය කර React Code එකම Deploy කරන්නේ මෙහෙමයි:</span>
             </h3>
             <p className="text-xs text-gray-700 leading-relaxed font-medium">
-              ඔබට මෙම වෙබ් අඩවිය GitHub එකට දමා නොමිලේ ලොව ඕනෑම කෙනෙකුට නැරඹිය හැකි වන පරිදි <strong>GitHub Pages</strong> හරහා Public කරගත හැක. පහත පියවර 3 අනුගමනය කරන්න.
+              Vite + React ව්‍යාපෘතියක TypeScript source files සෘජුවම බ්‍රවුසරයකට ධාවනය කළ නොහැකි නිසා සහ asset paths සකස් විය යුතු නිසා, GitHub Actions මඟින් ස්වයංක්‍රීයව <code className="bg-white/80 px-1 py-0.5 rounded font-mono">npm run build</code> වී deploy වන පරිදි <strong>.github/workflows/deploy.yml</strong> සහ <code className="bg-white/80 px-1 py-0.5 rounded font-mono">vite.config.ts (base: './')</code> සකස් කර ඇත!
             </p>
           </div>
 
-          {/* Step 1: Create Repo */}
+          {/* Step 1: Push latest code */}
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-[#0061a4] text-white text-xs font-bold flex items-center justify-center">
                 1
               </span>
               <h4 className="text-sm font-bold text-gray-900">
-                GitHub එකේ New Repository එකක් සාදන්න (Create Repository)
-              </h4>
-            </div>
-            <div className="ml-8 text-xs text-gray-600 space-y-1">
-              <p>1. GitHub ගිණුමට ලොග් වී <strong>New Repository</strong> ක්ලික් කරන්න.</p>
-              <p>2. Repository name එක ලෙස <code className="bg-gray-100 px-1.5 py-0.5 rounded text-[#0061a4] font-mono">english-for-kids</code> වැනි නමක් දෙන්න.</p>
-              <p>3. <strong>Public</strong> ලෙස තෝරා <strong>Create repository</strong> ඔබන්න.</p>
-            </div>
-          </div>
-
-          {/* Step 2: Upload or Git Push */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0061a4] text-white text-xs font-bold flex items-center justify-center">
-                2
-              </span>
-              <h4 className="text-sm font-bold text-gray-900">
-                කෝඩ් එක GitHub එකට Push කරන්න (හෝ Upload කරන්න)
+                නවතම Code එක GitHub Repo එකට Push කරන්න
               </h4>
             </div>
             <div className="ml-8 space-y-2">
               <p className="text-xs text-gray-600">
-                Terminal එකේ පහත Commands එකින් එක Run කරන්න (ඔබගේ GitHub username එක replace කරන්න):
+                Terminal එකේ පහත commands run කරන්න (දැන් <code className="font-mono bg-gray-100 px-1 rounded">.github/workflows/deploy.yml</code> සහ <code className="font-mono bg-gray-100 px-1 rounded">base: './'</code> අඩංගු වේ):
               </p>
               <div className="relative bg-gray-900 text-gray-100 rounded-xl p-3 font-mono text-xs overflow-x-auto">
-                <pre>{gitCommands}</pre>
-                <button
-                  onClick={() => copyToClipboard(gitCommands, 'git-cmds')}
-                  className="absolute top-2 right-2 p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-gray-200 text-xs flex items-center gap-1 transition"
-                >
-                  {copiedStep === 'git-cmds' ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-green-400" />
-                      <span className="text-green-400">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
+                <pre>{`git add .
+git commit -m "Configure GitHub Actions and relative base path for GitHub Pages"
+git push origin main`}</pre>
               </div>
             </div>
           </div>
 
-          {/* Step 3: Turn on GitHub Pages */}
+          {/* Step 2: Select GitHub Actions in Settings */}
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0061a4] text-white text-xs font-bold flex items-center justify-center">
+              <span className="w-6 h-6 rounded-full bg-[#ff5748] text-white text-xs font-bold flex items-center justify-center">
+                2
+              </span>
+              <h4 className="text-sm font-bold text-gray-900">
+                GitHub Settings වල Pages Source එක "GitHub Actions" ලෙස වෙනස් කරන්න (වැදගත්ම පියවර!)
+              </h4>
+            </div>
+            <div className="ml-8 text-xs text-gray-600 space-y-2">
+              <p>1. ඔබගේ GitHub Repository (<code className="font-mono text-[#0061a4]">English-For-Kids</code>) එකේ <strong>Settings</strong> ටැබ් එකට යන්න.</p>
+              <p>2. වම් පස මෙනුවේ ඇති <strong>Pages</strong> ක්ලික් කරන්න.</p>
+              <p>3. <strong>"Build and deployment"</strong> යටතේ ඇති <strong>Source</strong> dropdown එකෙන් <strong className="text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-200">"GitHub Actions"</strong> තෝරන්න (කලින් තිබූ "Deploy from a branch" වෙනුවට).</p>
+              <p className="text-xs text-emerald-700 font-medium bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                🎉 මෙය තේරූ පසු, ඔබ push කරන සෑම විටම GitHub Actions මඟින් ස්වයංක්‍රීයව React App එක build කර GitHub Pages වෙත deploy කරනු ඇත. සුදු පාට screen එක වෙනුවට සම්පූර්ණ වෙබ් අඩවිය load වේ!
+              </p>
+            </div>
+          </div>
+
+          {/* Step 3: Check Actions tab */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-[#2E7D32] text-white text-xs font-bold flex items-center justify-center">
                 3
               </span>
               <h4 className="text-sm font-bold text-gray-900">
-                GitHub Pages සක්‍රිය කර Public Link එක ලබා ගැනීම
+                Actions ටැබ් එකෙන් Build Progress එක බලාගන්න
               </h4>
             </div>
             <div className="ml-8 text-xs text-gray-600 space-y-1">
-              <p>1. ඔබගේ GitHub repo එකේ <strong>Settings</strong> ටැබ් එකට යන්න.</p>
-              <p>2. වම් පැත්තේ ඇති <strong>Pages</strong> මෙනුව ක්ලික් කරන්න.</p>
-              <p>3. <strong>Branch</strong> යටතේ <code className="bg-gray-100 px-1 rounded font-mono">main</code> සහ <code className="bg-gray-100 px-1 rounded font-mono">/(root)</code> තෝරා <strong>Save</strong> ඔබන්න.</p>
-              <p className="font-semibold text-green-700 pt-1">
-                ✓ මිනිත්තු 1-2 කින් ඔබගේ වෙබ් අඩවිය <span className="font-mono underline">https://&lt;username&gt;.github.io/english-for-kids/</span> හරහා සජීවීව දැකගත හැක!
-              </p>
+              <p>1. Repo එකේ උඩ ඇති <strong>Actions</strong> ටැබ් එකට ගොස් "Deploy to GitHub Pages" workflow එක කොළ පාටින් (Success) අවසන් වන තෙක් තත්පර 30-60ක් සිටින්න.</p>
+              <p>2. ඉන්පසු ඔබගේ සබැඳිය විවෘත කරන්න: <a href="https://jayasankha-dev.github.io/English-For-Kids/" target="_blank" rel="noreferrer" className="text-blue-600 underline font-mono">https://jayasankha-dev.github.io/English-For-Kids/</a></p>
             </div>
           </div>
 

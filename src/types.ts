@@ -17,7 +17,7 @@ export interface GalleryItem {
   id: string;
   title: string;
   subtitle: string;
-  category: 'animals' | 'letters' | 'games' | 'ocean' | 'phonics';
+  category: 'animals' | 'letters' | 'games' | 'ocean' | 'phonics' | 'teacher';
   imageUrl: string;
   tag: string;
   tagColor: string;

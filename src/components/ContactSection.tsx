@@ -121,7 +121,12 @@ export const ContactSection: React.FC = () => {
               </div>
               <div className="flex items-center gap-3 text-blue-50">
                 <Mail className="w-5 h-5 text-[#f9e534] flex-shrink-0" />
-                <span>englishforkids.lk@gmail.com</span>
+                <a
+                  href="mailto:englishforkidslk@gmail.com"
+                  className="hover:underline hover:text-[#f9e534] transition"
+                >
+                  englishforkidslk@gmail.com
+                </a>
               </div>
             </div>
           </div>
