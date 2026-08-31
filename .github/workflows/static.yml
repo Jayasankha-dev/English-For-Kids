@@ -30,7 +30,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm ci  # or `bun install` if using Bun
+        run: npm install  # or `bun install` if using Bun
 
       - name: Build
         run: npm run build  # or `bun run build`
