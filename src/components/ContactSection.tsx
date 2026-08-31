@@ -13,17 +13,50 @@ export const ContactSection: React.FC = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ✅ Formspree Integration - Updated handleSubmit
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    confetti({
-      particleCount: 60,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#0061a4', '#f9e534', '#ff5748']
-    });
+    setIsSubmitting(true);
+
+    const dataToSend = {
+      parentName: formData.parentName,
+      studentName: formData.studentName,
+      phone: formData.phone,
+      grade: formData.grade,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    try {
+      const response = await fetch('https://formspree.io/f/mzebddnb', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        confetti({
+          particleCount: 60,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#0061a4', '#f9e534', '#ff5748']
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Submission failed: ${errorData.error || 'Please try again or use WhatsApp.'}`);
+      }
+    } catch (error) {
+      alert('Network error. Please check your connection or use WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSendWhatsApp = () => {
@@ -200,6 +233,7 @@ export const ContactSection: React.FC = () => {
                     Parent's Name *
                   </label>
                   <input
+                    name="parentName"
                     type="text"
                     required
                     placeholder="e.g. Priyantha Silva"
@@ -214,6 +248,7 @@ export const ContactSection: React.FC = () => {
                     Student's Name *
                   </label>
                   <input
+                    name="studentName"
                     type="text"
                     required
                     placeholder="e.g. Senura Silva"
@@ -230,6 +265,7 @@ export const ContactSection: React.FC = () => {
                     Phone / WhatsApp Number *
                   </label>
                   <input
+                    name="phone"
                     type="tel"
                     required
                     placeholder="07X XXX XXXX"
@@ -244,6 +280,7 @@ export const ContactSection: React.FC = () => {
                     Student Grade *
                   </label>
                   <select
+                    name="grade"
                     value={formData.grade}
                     onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0061a4] bg-white"
@@ -297,6 +334,7 @@ export const ContactSection: React.FC = () => {
                   Message or Specific Requirements (Optional)
                 </label>
                 <textarea
+                  name="message"
                   rows={3}
                   placeholder="Any particular areas of focus (e.g. grammar, speech confidence, python programming, school exam prep)..."
                   value={formData.message}
@@ -308,10 +346,13 @@ export const ContactSection: React.FC = () => {
               <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <button
                   type="submit"
-                  className="flex-1 tactile-btn py-3 px-6 rounded-xl bg-[#0061a4] text-white font-fredoka font-bold text-base flex items-center justify-center gap-2 hover:bg-[#00497d]"
+                  disabled={isSubmitting}
+                  className={`flex-1 tactile-btn py-3 px-6 rounded-xl bg-[#0061a4] text-white font-fredoka font-bold text-base flex items-center justify-center gap-2 hover:bg-[#00497d] ${
+                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
                   <Send className="w-4 h-4" />
-                  <span>Send Inquiry</span>
+                  <span>{isSubmitting ? 'Submitting...' : 'Send Inquiry'}</span>
                 </button>
 
                 <button
