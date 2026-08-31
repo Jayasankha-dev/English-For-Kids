@@ -24,6 +24,7 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
   });
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialCourseName) {
@@ -33,15 +34,48 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ✅ Formspree Integration - Updated handleSubmit
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSuccess(true);
-    confetti({
-      particleCount: 50,
-      spread: 80,
-      origin: { y: 0.5 },
-      colors: ['#0061a4', '#f9e534', '#ff5748']
-    });
+    setIsSubmitting(true);
+
+    const dataToSend = {
+      parentName: formData.parentName,
+      studentName: formData.studentName,
+      phone: formData.phone,
+      grade: formData.grade,
+      subject: formData.subject,
+      preferredTime: formData.preferredTime,
+      courseNote: formData.courseNote,
+    };
+
+    try {
+      const response = await fetch('https://formspree.io/f/mzebddnb', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (response.ok) {
+        setIsSuccess(true);
+        confetti({
+          particleCount: 50,
+          spread: 80,
+          origin: { y: 0.5 },
+          colors: ['#0061a4', '#f9e534', '#ff5748']
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Submission failed: ${errorData.error || 'Please try again or use WhatsApp.'}`);
+      }
+    } catch (error) {
+      alert('Network error. Please check your connection or use WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleWhatsApp = () => {
@@ -123,6 +157,7 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
                     Parent's Name *
                   </label>
                   <input
+                    name="parentName"
                     type="text"
                     required
                     placeholder="e.g. Nimalka Perera"
@@ -136,6 +171,7 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
                     Student's Name *
                   </label>
                   <input
+                    name="studentName"
                     type="text"
                     required
                     placeholder="e.g. Oshada Perera"
@@ -152,6 +188,7 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
                     Phone / WhatsApp *
                   </label>
                   <input
+                    name="phone"
                     type="tel"
                     required
                     placeholder="074 153 4794"
@@ -165,6 +202,7 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
                     Grade *
                   </label>
                   <select
+                    name="grade"
                     value={formData.grade}
                     onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0061a4] bg-white"
@@ -218,6 +256,7 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
                   Preferred Time Slot
                 </label>
                 <select
+                  name="preferredTime"
                   value={formData.preferredTime}
                   onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0061a4] bg-white"
@@ -232,10 +271,13 @@ export const JoinClassModal: React.FC<JoinClassModalProps> = ({
               <div className="pt-2 flex flex-col sm:flex-row gap-2">
                 <button
                   type="submit"
-                  className="flex-1 tactile-btn py-3 rounded-xl bg-[#0061a4] text-white font-fredoka font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#00497d]"
+                  disabled={isSubmitting}
+                  className={`flex-1 tactile-btn py-3 rounded-xl bg-[#0061a4] text-white font-fredoka font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#00497d] ${
+                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
                   <Send className="w-4 h-4" />
-                  <span>Submit Enrollment</span>
+                  <span>{isSubmitting ? 'Submitting...' : 'Submit Enrollment'}</span>
                 </button>
                 <button
                   type="button"
