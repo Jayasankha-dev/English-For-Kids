@@ -6,7 +6,7 @@ export const GALLERY_DATA: GalleryItem[] = [
     title: 'Meet Teacher Deshani Bandara',
     subtitle: 'Lead Instructor & Founder guiding 1-on-1 English & ICT classes with warmth and patience.',
     category: 'teacher',
-    imageUrl: '/teacher-portrait.jpg',
+    imageUrl: 'https://raw.githubusercontent.com/Jayasankha-dev/English-For-Kids/refs/heads/main/src/assets/images/portrait.jpg',
     tag: 'Teacher Profile',
     tagColor: 'bg-[#0061a4] text-white',
     mediaType: 'image'
@@ -16,7 +16,7 @@ export const GALLERY_DATA: GalleryItem[] = [
     title: 'Interactive ICT & Coding Guidance',
     subtitle: 'Mentoring young learners and peers hands-on at the workstation with modern software & logic.',
     category: 'teacher',
-    imageUrl: '/teacher-lab.jpg',
+    imageUrl: 'https://github.com/Jayasankha-dev/English-For-Kids/blob/main/src/assets/images/teacher_ict_lab_1788133712882.jpg',
     tag: 'ICT & Tech Mentoring',
     tagColor: 'bg-[#2E7D32] text-white',
     mediaType: 'image',
