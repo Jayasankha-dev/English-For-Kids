@@ -3,8 +3,8 @@ import { Sparkles, Star, Rocket, Laptop, Heart, Users, Video, Award, Phone, Send
 import { Interactive3DCanvas } from './Interactive3DCanvas';
 import heroImg from '../assets/images/hero_kids_learning_1788130643393.jpg';
 import classroomImg from '../assets/images/modern_learning_space_1788130660467.jpg';
-import teacherPortraitImg from '../assets/images/teacher_made1_portrait_1788134033965.jpg';
-import teacherLabImg from '../assets/images/teacher_ict_lab_session_1788134051659.jpg';
+import teacherPortraitImg from '../assets/images/teacher_ict_lab_session_1788134051659.jpg';
+import teacherLabImg from '../assets/images/IMG-20260820-WA0098.jpg';
 
 interface AboutSectionProps {
   onOpenJoinModal: () => void;
